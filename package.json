@@ -2,6 +2,7 @@
   "name": "calorie-deficit-app",
   "version": "1.0.0",
   "private": true,
+  "homepage": "https://dogannvolkan.github.io/calorieDeficitApp",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -24,7 +25,9 @@
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.{js,jsx,ts,tsx}",
     "lint:fix": "eslint --fix src/**/*.{js,jsx,ts,tsx}",
-    "format": "prettier --write src/**/*.{js,jsx,ts,tsx,css,md,json}"
+    "format": "prettier --write src/**/*.{js,jsx,ts,tsx,css,md,json}",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
