@@ -84,7 +84,11 @@ const CancelButton = styled(Button)`
   }
 `;
 
-export const UserProfileForm: React.FC<UserProfileFormProps> = ({ onSubmit, onCancel, initialValues }) => {
+export const UserProfileForm: React.FC<UserProfileFormProps> = ({
+  onSubmit,
+  onCancel,
+  initialValues,
+}) => {
   const [age, setAge] = useState(initialValues?.age?.toString() || '');
   const [height, setHeight] = useState(initialValues?.height?.toString() || '');
   const [weight, setWeight] = useState(initialValues?.weight?.toString() || '');
@@ -209,4 +213,4 @@ export const UserProfileForm: React.FC<UserProfileFormProps> = ({ onSubmit, onCa
       </ButtonGroup>
     </Form>
   );
-}; 
+};

@@ -14,7 +14,7 @@ const StyledButton = styled.button<{ $loading?: boolean }>`
   color: white;
   font-weight: 600;
   transition: all 0.2s ease;
-  cursor: ${props => props.$loading ? 'wait' : 'pointer'};
+  cursor: ${(props) => (props.$loading ? 'wait' : 'pointer')};
 
   &:hover {
     background: #357abd;
@@ -26,20 +26,10 @@ const StyledButton = styled.button<{ $loading?: boolean }>`
   }
 `;
 
-export const Button: React.FC<ButtonProps> = ({ 
-  loading, 
-  children, 
-  onClick, 
-  ...props 
-}) => {
+export const Button: React.FC<ButtonProps> = ({ loading, children, onClick, ...props }) => {
   return (
-    <StyledButton 
-      $loading={loading} 
-      onClick={onClick} 
-      disabled={loading} 
-      {...props}
-    >
+    <StyledButton $loading={loading} onClick={onClick} disabled={loading} {...props}>
       {loading ? 'Loading...' : children}
     </StyledButton>
   );
-}; 
+};

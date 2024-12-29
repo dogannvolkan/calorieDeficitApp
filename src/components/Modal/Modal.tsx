@@ -52,7 +52,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, title }
 
   return (
     <Overlay onClick={onClose}>
-      <ModalContent onClick={e => e.stopPropagation()}>
+      <ModalContent onClick={(e) => e.stopPropagation()}>
         <ModalHeader>
           <h2>{title}</h2>
           <CloseButton onClick={onClose}>&times;</CloseButton>
@@ -61,4 +61,4 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, title }
       </ModalContent>
     </Overlay>
   );
-}; 
+};

@@ -40,4 +40,4 @@ export const Tooltip: React.FC<TooltipProps> = ({ content, children }) => {
       <TooltipContent>{content}</TooltipContent>
     </TooltipContainer>
   );
-}; 
+};

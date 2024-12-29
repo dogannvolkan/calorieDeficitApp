@@ -52,12 +52,12 @@ const InfoItem = styled.div`
   background: #f5f5f5;
   padding: 12px;
   border-radius: 8px;
-  
+
   h4 {
     color: #666;
     margin-bottom: 4px;
   }
-  
+
   p {
     color: #333;
     font-weight: 500;
@@ -90,7 +90,10 @@ const calculateRequiredCalorieAdjustment = (
   targetDate: string
 ) => {
   const weightDiff = Math.abs(currentWeight - targetWeight);
-  const daysUntilTarget = Math.max(1, Math.round((new Date(targetDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)));
+  const daysUntilTarget = Math.max(
+    1,
+    Math.round((new Date(targetDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))
+  );
   // 7700 calories = 1kg
   const totalCaloriesNeeded = weightDiff * 7700;
   const dailyAdjustment = Math.round(totalCaloriesNeeded / daysUntilTarget);
@@ -124,7 +127,7 @@ const calculateDailyCalories = (profile: {
   };
 
   const tdee = Math.round(bmr * multipliers[profile.activityLevel as keyof typeof multipliers]);
-  
+
   const calorieAdjustment = calculateRequiredCalorieAdjustment(
     profile.weight,
     profile.targetWeight,
@@ -145,32 +148,40 @@ interface Meal {
 }
 
 const calculateMacroTotals = (meals: Meal[]) => {
-  return meals.reduce((totals, meal) => ({
-    protein: totals.protein + (meal.protein || 0),
-    carbs: totals.carbs + (meal.carbs || 0),
-    fat: totals.fat + (meal.fat || 0),
-  }), { protein: 0, carbs: 0, fat: 0 });
+  return meals.reduce(
+    (totals, meal) => ({
+      protein: totals.protein + (meal.protein || 0),
+      carbs: totals.carbs + (meal.carbs || 0),
+      fat: totals.fat + (meal.fat || 0),
+    }),
+    { protein: 0, carbs: 0, fat: 0 }
+  );
 };
 
-const calculateMacroGoals = (weight: number, currentWeight: number, targetWeight: number, calories: number) => {
+const calculateMacroGoals = (
+  weight: number,
+  currentWeight: number,
+  targetWeight: number,
+  calories: number
+) => {
   const goal = determineWeightGoal(currentWeight, targetWeight);
-  
+
   // Protein: 2g per kg for weight loss, 1.6g for maintenance, 2.2g for muscle gain
   const proteinMultiplier = {
     lose: 2,
     maintain: 1.6,
-    gain: 2.2
+    gain: 2.2,
   };
-  
+
   const protein = Math.round(weight * proteinMultiplier[goal]);
-  
+
   // Fat: 20-35% of total calories (using 25%)
   const fat = Math.round((calories * 0.25) / 9);
-  
+
   // Remaining calories from carbs
-  const carbCalories = calories - (protein * 4) - (fat * 9);
+  const carbCalories = calories - protein * 4 - fat * 9;
   const carbs = Math.round(carbCalories / 4);
-  
+
   return { protein, carbs, fat };
 };
 
@@ -223,11 +234,7 @@ export const Dashboard: React.FC = () => {
     fat: number;
   }) => {
     if (editingMeal) {
-      setMeals(meals.map(meal => 
-        meal.id === editingMeal.id 
-          ? { ...meal, ...mealData }
-          : meal
-      ));
+      setMeals(meals.map((meal) => (meal.id === editingMeal.id ? { ...meal, ...mealData } : meal)));
     } else {
       setMeals([...meals, { id: String(Date.now()), ...mealData }]);
     }
@@ -241,7 +248,7 @@ export const Dashboard: React.FC = () => {
       light: 'Light Exercise (1-2 days/week)',
       moderate: 'Moderate Exercise (3-5 days/week)',
       active: 'Very Active (6-7 days/week)',
-      extra: 'Extra Active (physical job + training)'
+      extra: 'Extra Active (physical job + training)',
     };
     return formats[level] || level;
   };
@@ -262,13 +269,9 @@ export const Dashboard: React.FC = () => {
       <Header>
         <h1>Calorie Deficit App</h1>
         {userProfile ? (
-          <ProfileButton onClick={() => setIsProfileModalOpen(true)}>
-            Edit Profile
-          </ProfileButton>
+          <ProfileButton onClick={() => setIsProfileModalOpen(true)}>Edit Profile</ProfileButton>
         ) : (
-          <ProfileButton onClick={() => setIsProfileModalOpen(true)}>
-            Create Profile
-          </ProfileButton>
+          <ProfileButton onClick={() => setIsProfileModalOpen(true)}>Create Profile</ProfileButton>
         )}
       </Header>
 
@@ -285,10 +288,13 @@ export const Dashboard: React.FC = () => {
             </InfoItem>
             <InfoItem>
               <h4>Health Metrics</h4>
-              <p>BMI: {(() => {
-                const bmi = userProfile.weight / Math.pow(userProfile.height / 100, 2);
-                return `${bmi.toFixed(1)} (${getBMICategory(bmi)})`;
-              })()}</p>
+              <p>
+                BMI:{' '}
+                {(() => {
+                  const bmi = userProfile.weight / Math.pow(userProfile.height / 100, 2);
+                  return `${bmi.toFixed(1)} (${getBMICategory(bmi)})`;
+                })()}
+              </p>
               <p>Activity Level: {formatActivityLevel(userProfile.activityLevel)}</p>
               <p>Daily Calorie Goal: {dailyCalorieGoal} kcal</p>
               {(() => {
@@ -313,11 +319,17 @@ export const Dashboard: React.FC = () => {
               <p>Target Weight: {userProfile.targetWeight} kg</p>
               {userProfile.weight !== userProfile.targetWeight && (
                 <>
-                  <p>{`${Math.abs(userProfile.weight - userProfile.targetWeight).toFixed(1)} kg to ${
-                    userProfile.weight < userProfile.targetWeight ? 'gain' : 'lose'
-                  }`}</p>
+                  <p>{`${Math.abs(userProfile.weight - userProfile.targetWeight).toFixed(
+                    1
+                  )} kg to ${userProfile.weight < userProfile.targetWeight ? 'gain' : 'lose'}`}</p>
                   <p>Target Date: {new Date(userProfile.targetDate).toLocaleDateString()}</p>
-                  <p>Days Remaining: {Math.round((new Date(userProfile.targetDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))}</p>
+                  <p>
+                    Days Remaining:{' '}
+                    {Math.round(
+                      (new Date(userProfile.targetDate).getTime() - new Date().getTime()) /
+                        (1000 * 60 * 60 * 24)
+                    )}
+                  </p>
                 </>
               )}
             </InfoItem>
@@ -337,9 +349,9 @@ export const Dashboard: React.FC = () => {
           <h3>Daily Calories</h3>
           {userProfile ? (
             <>
-              <ProgressBar 
-                progress={calorieProgress} 
-                label={`${totalCaloriesToday} / ${dailyCalorieGoal} kcal`} 
+              <ProgressBar
+                progress={calorieProgress}
+                label={`${totalCaloriesToday} / ${dailyCalorieGoal} kcal`}
               />
               <MacroInfo>
                 {(() => {
@@ -352,9 +364,15 @@ export const Dashboard: React.FC = () => {
                   );
                   return (
                     <>
-                      <MacroItem>Protein: {macros.protein}g / {macroGoals.protein}g</MacroItem>
-                      <MacroItem>Carbs: {macros.carbs}g / {macroGoals.carbs}g</MacroItem>
-                      <MacroItem>Fat: {macros.fat}g / {macroGoals.fat}g</MacroItem>
+                      <MacroItem>
+                        Protein: {macros.protein}g / {macroGoals.protein}g
+                      </MacroItem>
+                      <MacroItem>
+                        Carbs: {macros.carbs}g / {macroGoals.carbs}g
+                      </MacroItem>
+                      <MacroItem>
+                        Fat: {macros.fat}g / {macroGoals.fat}g
+                      </MacroItem>
                     </>
                   );
                 })()}
@@ -377,8 +395,8 @@ export const Dashboard: React.FC = () => {
 
       <Card>
         <h2>Today's Meals</h2>
-        <MealLog 
-          meals={meals} 
+        <MealLog
+          meals={meals}
           onAddMeal={() => {
             setEditingMeal(null);
             setIsModalOpen(true);
@@ -418,4 +436,4 @@ export const Dashboard: React.FC = () => {
       </Modal>
     </DashboardContainer>
   );
-}; 
+};

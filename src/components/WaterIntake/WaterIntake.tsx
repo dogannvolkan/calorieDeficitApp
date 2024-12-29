@@ -25,7 +25,7 @@ const WaterBar = styled.div`
 `;
 
 const Progress = styled.div<{ width: number }>`
-  width: ${props => props.width}%;
+  width: ${(props) => props.width}%;
   height: 100%;
   background: linear-gradient(90deg, #4a90e2, #357abd);
   position: relative;
@@ -200,7 +200,7 @@ export const WaterIntake: React.FC<WaterIntakeProps> = ({
 
   return (
     <Container>
-      <WaterBar 
+      <WaterBar
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
@@ -215,7 +215,7 @@ export const WaterIntake: React.FC<WaterIntakeProps> = ({
           {currentAmount >= goal && '🎉'}
         </Label>
       </WaterBar>
-      
+
       <Controls>
         <AmountButton onClick={() => addAmount(0.1)}>+100ml</AmountButton>
         <AmountButton onClick={() => addAmount(0.25)}>+250ml</AmountButton>
@@ -242,4 +242,4 @@ export const WaterIntake: React.FC<WaterIntakeProps> = ({
       )}
     </Container>
   );
-}; 
+};

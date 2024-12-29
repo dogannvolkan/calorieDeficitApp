@@ -20,7 +20,7 @@ const ProgressTrack = styled.div`
 `;
 
 const ProgressFill = styled.div<{ $progress: number }>`
-  width: ${props => props.$progress}%;
+  width: ${(props) => props.$progress}%;
   height: 100%;
   background: #4a90e2;
   transition: width 0.3s ease;
@@ -41,4 +41,4 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({ progress, label }) => 
       </ProgressTrack>
     </ProgressContainer>
   );
-}; 
+};

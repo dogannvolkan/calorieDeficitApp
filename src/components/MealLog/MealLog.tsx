@@ -70,7 +70,7 @@ export const MealLog: React.FC<MealLogProps> = ({ meals, onAddMeal, onEditMeal }
       {meals.length === 0 ? (
         <p>No meals logged yet. Add your first meal!</p>
       ) : (
-        meals.map(meal => (
+        meals.map((meal) => (
           <MealItem key={meal.id} interactive onClick={() => onEditMeal(meal)}>
             <MealInfo>
               <h3>{meal.name}</h3>
@@ -88,4 +88,4 @@ export const MealLog: React.FC<MealLogProps> = ({ meals, onAddMeal, onEditMeal }
       <AddMealButton onClick={onAddMeal}>Add Meal</AddMealButton>
     </MealContainer>
   );
-}; 
+};

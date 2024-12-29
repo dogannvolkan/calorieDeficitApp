@@ -20,12 +20,13 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.{js,jsx,ts,tsx}",
     "lint:fix": "eslint --fix src/**/*.{js,jsx,ts,tsx}",
     "format": "prettier --write src/**/*.{js,jsx,ts,tsx,css,md,json}",
+    "format:fix": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,md}\" && eslint --fix \"src/**/*.{ts,tsx,js,jsx}\"",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },

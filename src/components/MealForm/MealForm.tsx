@@ -113,12 +113,7 @@ export const MealForm: React.FC<MealFormProps> = ({ onSubmit, onCancel, initialV
 
       <FormGroup>
         <Label htmlFor="time">Time (Optional)</Label>
-        <Input
-          id="time"
-          type="time"
-          value={time}
-          onChange={(e) => setTime(e.target.value)}
-        />
+        <Input id="time" type="time" value={time} onChange={(e) => setTime(e.target.value)} />
       </FormGroup>
 
       <FormGroup>
@@ -162,4 +157,4 @@ export const MealForm: React.FC<MealFormProps> = ({ onSubmit, onCancel, initialV
       </ButtonGroup>
     </Form>
   );
-}; 
+};
