@@ -51,10 +51,12 @@
     "@types/styled-components": "^5.1.34",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^8.10.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.33.2",
-    "prettier": "^2.8.8"
+    "prettier": "^2.8.8",
+    "gh-pages": "^6.1.1"
   }
 } 
