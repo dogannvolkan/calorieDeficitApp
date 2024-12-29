@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/calorieDeficitApp/static/css/main.965c9217.css",
+    "main.js": "/calorieDeficitApp/static/js/main.dea98675.js",
+    "index.html": "/calorieDeficitApp/index.html",
+    "main.965c9217.css.map": "/calorieDeficitApp/static/css/main.965c9217.css.map",
+    "main.dea98675.js.map": "/calorieDeficitApp/static/js/main.dea98675.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.965c9217.css",
+    "static/js/main.dea98675.js"
+  ]
+}
